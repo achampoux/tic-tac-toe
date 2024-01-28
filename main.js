@@ -1,32 +1,21 @@
-const r1c1 = document.getElementById('r1c1');
-const r1c2 = document.getElementById('r1c2');
-const r1c3 = document.getElementById('r1c3');
-const r2c1 = document.getElementById('r2c1');
-const r2c2 = document.getElementById('r2c2');
-const r2c3 = document.getElementById('r2c3');
-const r3c1 = document.getElementById('r3c1');
-const r3c2 = document.getElementById('r3c2');
-const r3c3 = document.getElementById('r3c3');
+const rows = 3;
+const cols = 3;
+
+function addListeners() {
+    for (let i = 1; i <= rows; i++) {
+        for (let j = 1; j <= cols; j++) {
+            const element = document.getElementById(`r${i}c${j}`);
+            element.addEventListener("click", eventListener);
+        }
+    }
+}
+
+addListeners();
 
 const instructions = document.getElementById('instructions');
 const playagain = document.getElementById('playagain');
 
 playagain.addEventListener("click", eventListener);
-
-function addListeners() {
-    r1c1.addEventListener("click", eventListener);
-    r1c2.addEventListener("click", eventListener);
-    r1c3.addEventListener("click", eventListener);
-    r2c1.addEventListener("click", eventListener);
-    r2c2.addEventListener("click", eventListener);
-    r2c3.addEventListener("click", eventListener);
-    r3c1.addEventListener("click", eventListener);
-    r3c2.addEventListener("click", eventListener);
-    r3c3.addEventListener("click", eventListener);
-}
-
-addListeners();
-
 
 function removeBoardListeners(){
     r1c1.removeEventListener("click", eventListener);
