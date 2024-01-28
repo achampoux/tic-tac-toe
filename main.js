@@ -10,24 +10,21 @@ function addListeners() {
     }
 }
 
+function removeBoardListeners() {
+    for (let i = 1; i <= rows; i++) {
+        for (let j = 1; j <= cols; j++) {
+            const element = document.getElementById(`r${i}c${j}`);
+            element.removeEventListener("click", eventListener);
+        }
+    }
+}
+
 addListeners();
 
 const instructions = document.getElementById('instructions');
 const playagain = document.getElementById('playagain');
 
 playagain.addEventListener("click", eventListener);
-
-function removeBoardListeners(){
-    r1c1.removeEventListener("click", eventListener);
-    r1c2.removeEventListener("click", eventListener);
-    r1c3.removeEventListener("click", eventListener);
-    r2c1.removeEventListener("click", eventListener);
-    r2c2.removeEventListener("click", eventListener);
-    r2c3.removeEventListener("click", eventListener);
-    r3c1.removeEventListener("click", eventListener);
-    r3c2.removeEventListener("click", eventListener);
-    r3c3.removeEventListener("click", eventListener);
-}
 
 var player1 = {
     symbol: 'X',
