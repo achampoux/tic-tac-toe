@@ -1,5 +1,10 @@
+const instructions = document.getElementById('instructions');
+const playagain = document.getElementById('playagain');
+
 const rows = 3;
 const cols = 3;
+var player1 = { symbol: 'X', position: '' };
+var player2 = { symbol: 'O', position: '' };
 
 function addListeners() {
     for (let i = 1; i <= rows; i++) {
@@ -21,20 +26,7 @@ function removeBoardListeners() {
 
 addListeners();
 
-const instructions = document.getElementById('instructions');
-const playagain = document.getElementById('playagain');
-
 playagain.addEventListener("click", eventListener);
-
-var player1 = {
-    symbol: 'X',
-    position: ''
-}
-
-var player2 = {
-    symbol: 'O',
-    position: ''
-}
 
 
 function eventListener(e) {
@@ -102,60 +94,37 @@ const gameBoard = {
         gameBoard.array.splice(player.position,1,player.symbol);
     },
     draw() {
-        r1c1.innerText = gameBoard.array.at(0);
-        r1c2.innerText = gameBoard.array.at(1);
-        r1c3.innerText = gameBoard.array.at(2);
-        r2c1.innerText = gameBoard.array.at(3);
-        r2c2.innerText = gameBoard.array.at(4);
-        r2c3.innerText = gameBoard.array.at(5);
-        r3c1.innerText = gameBoard.array.at(6);
-        r3c2.innerText = gameBoard.array.at(7);
-        r3c3.innerText = gameBoard.array.at(8);
+        let index = 0;
+        for (let i = 1; i <= 3; i++) {
+            for (let j = 1; j <= 3; j++) {
+                const cell = document.getElementById(`r${i}c${j}`);
+                cell.innerText = gameBoard.array.at(index++);
+            }
+        }
         backgroundColors();
     },
     checkIfWinner(symbol) {
         const THE_WINNER_IS = 'The Winner is ' + symbol;
-        if (gameBoard.array.at(0) == symbol && gameBoard.array.at(1) == symbol && gameBoard.array.at(2) == symbol) {
-            removeBoardListeners();
-            return THE_WINNER_IS;
+
+        const winningCombinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6]             // Diagonals
+        ];
+
+        for (const combination of winningCombinations) {
+            if (combination.every(index => gameBoard.array.at(index) === symbol)) {
+                removeBoardListeners();
+                return THE_WINNER_IS;
+            }
         }
-        if (gameBoard.array.at(3) == symbol && gameBoard.array.at(4) == symbol && gameBoard.array.at(5) == symbol) {
-            removeBoardListeners();
-            return THE_WINNER_IS;
-        }
-        if (gameBoard.array.at(6) == symbol && gameBoard.array.at(7) == symbol && gameBoard.array.at(8) == symbol) {
-            removeBoardListeners();
-            return THE_WINNER_IS;
-        }
-        if (gameBoard.array.at(0) == symbol && gameBoard.array.at(3) == symbol && gameBoard.array.at(6) == symbol) {
-            removeBoardListeners();
-            return THE_WINNER_IS;
-        }
-        if (gameBoard.array.at(1) == symbol && gameBoard.array.at(4) == symbol && gameBoard.array.at(7) == symbol) {
-            removeBoardListeners();
-            return THE_WINNER_IS;
-        }
-        if (gameBoard.array.at(2) == symbol && gameBoard.array.at(5) == symbol && gameBoard.array.at(8) == symbol) {
-            removeBoardListeners();
-            return THE_WINNER_IS;
-        }
-        if (gameBoard.array.at(0) == symbol && gameBoard.array.at(4) == symbol && gameBoard.array.at(8) == symbol) {
-            removeBoardListeners();
-            return THE_WINNER_IS;
-        }
-        if (gameBoard.array.at(2) == symbol && gameBoard.array.at(4) == symbol && gameBoard.array.at(6) == symbol) {
-            removeBoardListeners();
-            return THE_WINNER_IS;
-        }
-        if (gameBoard.array.at(0) != '' && gameBoard.array.at(1) != '' && gameBoard.array.at(2) != '' && gameBoard.array.at(3) != '' && gameBoard.array.at(4) != '' && gameBoard.array.at(5) != '' && gameBoard.array.at(6) != '' && gameBoard.array.at(7) != '' && gameBoard.array.at(8) != '') {
+
+        if (gameBoard.array.every(cell => cell !== '')) {
             removeBoardListeners();
             return "It's a draw!";
         }
-        
-        else {
-            if (gameBoard.currentPlayer == 1) { return `Player 2 : choose a position` }
-            else { return `Player 1 : choose a position` };
-        } 
+
+        return (gameBoard.currentPlayer === 1) ? 'Player 2 : choose a position' : 'Player 1 : choose a position';
     },
     reset() {
         player1.position = '';
