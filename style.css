@@ -1,0 +1,31 @@
+td {
+    border: 1px solid black;
+    margin: 0;
+    padding: 25px;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+}
+
+td:hover {
+    background-color: lightblue!important;
+}
+
+p#instructions, p#conclusion {
+    text-align: center;
+}
+
+button#playagain {
+    margin: auto;
+    display: block;
+}
+
+section {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+section.visual table {
+    margin: auto;
+}
